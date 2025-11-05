@@ -1,0 +1,19 @@
+      double precision function func_qy(x,y,t)
+c
+      implicit none
+      real*8 x,y,t,x1,x2,omega,xi0,tau,H0,y1,y2
+      omega=.0001405
+      tau=3456.
+      x1=40000.
+      x2=151800.4503056
+      y1=10000.
+      y2=54720.1801222
+      xi0=.25
+      H0=2.
+c
+      func_qy=xi0*dcos(omega*(x-x1))/dcos(omega*(x2-x1))*
+     $     dsin(omega*(y-y1))/dcos(omega*(y2-y1))
+     $     *dsin(omega*(t+tau))
+c      func_qy=1.0
+      return
+      end

@@ -1,0 +1,125 @@
+      MODULE COMM_EDGE
+
+      USE SIZES, ONLY : SZ
+
+      IMPLICIT NONE
+
+      PUBLIC
+
+      REAL(SZ),ALLOCATABLE :: ZE_ES(:,:) ! ZE_Edge_Shared
+      REAL(SZ),ALLOCATABLE :: ZE_EG(:,:) ! ZE_Edge_Ghost
+
+      REAL(SZ),ALLOCATABLE :: QX_ES(:,:), QX_EG(:,:)
+      REAL(SZ),ALLOCATABLE :: QY_ES(:,:), QY_EG(:,:)
+
+      REAL(SZ),ALLOCATABLE :: HB_ES(:,:), HB_EG(:,:)
+
+      INTEGER,ALLOCATABLE :: WDFLG_ES(:), WDFLG_EG(:)
+
+C********************** END OF DATA DECLARATIONS ***********************
+
+      CONTAINS
+
+      SUBROUTINE ALLOC_COMMEDG()
+
+      USE DG, ONLY : NEGP
+      USE MESSENGER_EDGE, ONLY : NEDG_SHARD, NEDG_GHOST
+
+      IMPLICIT NONE
+
+      ALLOCATE( ZE_ES(NEGP,NEDG_SHARD), ZE_EG(NEGP,NEDG_GHOST) )
+      ALLOCATE( QX_ES(NEGP,NEDG_SHARD), QX_EG(NEGP,NEDG_GHOST) )
+      ALLOCATE( QY_ES(NEGP,NEDG_SHARD), QY_EG(NEGP,NEDG_GHOST) )
+      ALLOCATE( HB_ES(NEGP,NEDG_SHARD), HB_EG(NEGP,NEDG_GHOST) )
+      ALLOCATE( WDFLG_ES(NEDG_SHARD), WDFLG_EG(NEDG_GHOST) )
+
+      END SUBROUTINE
+
+
+      SUBROUTINE UPDATE_HYDRO_EDGEVALUES(IRK)
+      USE DG, ONLY : NEGP,ZE,QX,QY,PHI_EDGE,DOF
+      USE MESSENGER_EDGE
+
+      IMPLICIT NONE
+
+      INTEGER I,K,IEL,IED,GP,IRK
+      REAL(SZ) ZES,QXS,QYS
+
+      DO I=1,NEDG_SHARD
+        IEL = IEDG_SHARD(1,I)
+        IED = IEDG_SHARD(2,I)
+
+        DO GP = 1,NEGP
+          ZES = 0.D0
+          QXS = 0.D0
+          QYS = 0.D0
+
+          DO K = 1,DOF
+            ZES = ZES + ZE(K,IEL,IRK)*PHI_EDGE(K,GP,IED)
+            QXS = QXS + QX(K,IEL,IRK)*PHI_EDGE(K,GP,IED)
+            QYS = QYS + QY(K,IEL,IRK)*PHI_EDGE(K,GP,IED)
+          ENDDO
+
+          ZE_ES(GP,I) = ZES
+          QX_ES(GP,I) = QXS
+          QY_ES(GP,I) = QYS
+
+        ENDDO
+      ENDDO
+
+      CALL UPDATER_EDG(ZE_ES,QX_ES,QY_ES,ZE_EG,QX_EG,QY_EG,3)
+
+      END SUBROUTINE
+
+
+      SUBROUTINE UPDATE_SED_EDGEVALUES(IRK)
+      USE DG, ONLY : NEGP,HB,PHI_EDGE,DOF
+      USE MESSENGER_EDGE
+
+      IMPLICIT NONE
+
+      INTEGER I,K,IEL,IED,GP,IRK
+      REAL(SZ) HBS
+
+      DO I=1,NEDG_SHARD
+        IEL = IEDG_SHARD(1,I)
+        IED = IEDG_SHARD(2,I)
+
+        DO GP = 1,NEGP
+          HBS = 0.D0
+
+          DO K = 1,DOF
+            HBS = HBS + HB(K,IEL,IRK)*PHI_EDGE(K,GP,IED)
+          ENDDO
+
+          HB_ES(GP,I) = HBS
+
+        ENDDO
+      ENDDO
+
+      CALL UPDATER_EDG(HB_ES,QX_ES,QY_ES,HB_EG,QX_EG,QY_EG,1)
+
+      END SUBROUTINE
+
+
+      SUBROUTINE UPDATE_EDGEWDFLG()
+      USE DG, ONLY : WDFLG
+      USE MESSENGER_EDGE
+
+      IMPLICIT NONE
+
+      INTEGER I,IEL
+
+      DO I=1,NEDG_SHARD
+        IEL = IEDG_SHARD(1,I)
+        WDFLG_ES(I) = WDFLG(IEL)
+      ENDDO
+
+      CALL UPDATEI_EDG(WDFLG_ES,WDFLG_ES,WDFLG_EG,WDFLG_EG,1)
+
+      END SUBROUTINE
+
+
+      END MODULE COMM_EDGE
+
+      
