@@ -145,8 +145,8 @@ C..........water depth at all points = average water depth
 
 C.........Zero out the fluxes
 
-          QX(:,J,IRK+1) = 0.D0
-          QY(:,J,IRK+1) = 0.D0
+          !QX(:,J,IRK+1) = 0.D0
+          !QY(:,J,IRK+1) = 0.D0
             
 C.........Set flags to dry and skip element check
 
@@ -191,8 +191,8 @@ C...........water depth at all points = average water depth
 
 C...........Zero out the fluxes
 
-            QX(:,J,IRK+1) = 0.D0
-            QY(:,J,IRK+1) = 0.D0
+            !QX(:,J,IRK+1) = 0.D0
+            !QY(:,J,IRK+1) = 0.D0
 
 C         --------------------------------------------------------------
 C.........Case 3B: Aaverage water depth > H0
@@ -266,8 +266,8 @@ C...........fluxes on dry nodes, and count new # of dry nodes
 C...........If all adjusted nodes are dry then zero out fluxes
 
             IF (NDRYNODE.EQ.3) THEN
-              QX(:,J,IRK+1) = 0.D0
-              QY(:,J,IRK+1) = 0.D0
+              !QX(:,J,IRK+1) = 0.D0
+              !QY(:,J,IRK+1) = 0.D0
 
 C...........Else re-distribute nodal fluxes
 
