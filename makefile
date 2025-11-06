@@ -25,7 +25,7 @@ ifeq ($(BUILDTYPE),adcprep)
   CF:= $(PPFC)
   O_DIR:=odir1/
   FFLAGS:= $(FFLAGS1) $(DPRE) $(IMODS)$(O_DIR) 
-  VPATH :=  ../prep 
+  VPATH :=  ./prep 
   PMSG_OBJ:=
 endif
 #                                      adcpost  
@@ -33,14 +33,14 @@ ifeq ($(BUILDTYPE),adcpost)
   CF:= $(PPFC)
   O_DIR:=odir3/
   FFLAGS:= $(FFLAGS1) $(DPRE) $(IMODS)$(O_DIR) 
-  VPATH :=  ../prep
+  VPATH :=  ./prep
 endif
 #                                      adcirc   
 ifeq ($(BUILDTYPE),adcirc)
   CF:= $(PPFC)
   O_DIR:=odir4/
   FFLAGS:= $(FFLAGS3) $(DA) $(IMODS)$(O_DIR)
-  VPATH:=  ../src 
+  VPATH:=  ./src 
   MSG_MOBJ:=
 endif
 #                                      padcirc   
@@ -48,7 +48,7 @@ ifeq ($(BUILDTYPE),padcirc)
   CF:= $(PFC)
   O_DIR:=odir5/
   FFLAGS:= $(FFLAGS4) $(DP) $(IMODS)$(O_DIR)
-  VPATH :=  ../src 
+  VPATH :=  ./src 
   MSG_MOBJ:= $(O_DIR)messenger_new.o $(O_DIR)messenger_node_new.o
   MSG_OBJ:= 
 endif
@@ -114,10 +114,10 @@ all :  metis adcprep adcpost adcirc padcirc
 
 ifeq ($(MAKELEVEL),0)
    metis:
-	$(MAKE) -C ../metis/Lib/ CC="$(CC)"  CFLAGS="$(CFLAGS)"
+	$(MAKE) -C ./metis/Lib/ CC="$(CC)"  CFLAGS="$(CFLAGS)"
    graphchk:
-	$(MAKE) -C ../metis/Programs/ CC="$(CC)"  CFLAGS="$(CFLAGS)" 
-	mv ../metis/graphchk ../work
+	$(MAKE) -C ./metis/Programs/ CC="$(CC)"  CFLAGS="$(CFLAGS)" 
+	mv ./metis/graphchk ../work
    adcprep:
 	$(MAKE) BUILDTYPE=adcprep  $@            
    adcprep2:
@@ -158,7 +158,7 @@ clean:
 clobber:
 	rm -r -f odir*
 	rm -f  graphchk adcprep adcprep2 adcpost adcirc  padcirc \
-                ../metis/Lib/*.o  ../metis/libmetis.a ../metis/Programs/*.o
+                ./metis/Lib/*.o  ./metis/libmetis.a ./metis/Programs/*.o
 help:
 	@echo "This makefile supports the following:"
 	@echo "make all      - makes all six targets"
@@ -272,4 +272,4 @@ $(O_DIR)sta_basis.o                 :  sta_basis.F  $(ADC_MOBJ)
 
 # graphchk
 
-$(O_DIR)io.o		:  ../metis/Lib
+$(O_DIR)io.o		:  ./metis/Lib

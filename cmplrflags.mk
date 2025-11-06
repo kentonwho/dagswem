@@ -31,7 +31,7 @@ ifeq ($(compiler),intel)   # Intel
   CC            :=  icc
   CFLAGS        :=  -I. -O2 -DLINUX
   CLIBS         := 
-  LIBS  	:=  -L ../metis  -lmetis
+  LIBS  	:=  -L ./metis  -lmetis
   MSGLIBS	:=  
 endif
 ifeq ($(compiler),pgi)   # PGI
@@ -51,7 +51,7 @@ ifeq ($(compiler),pgi)   # PGI
   CC            :=  pgcc
   CFLAGS        :=  -I. -fastsse -DLINUX
   CLIBS         := 
-  LIBS  	:=  -L ../metis  -lmetis
+  LIBS  	:=  -L ./metis  -lmetis
   MSGLIBS	:=  
 endif
 endif
@@ -84,8 +84,8 @@ ifeq ($(compiler),ibmxl)   # IBM XL compiler
 # LDFLAGS	:=  -bmaxdata:0x30000000
   CFLAGS	:=  -I. -O2 -w -qstrict -qfixed -qarch=auto -qcache=auto
   LDFLAGS	:=  
-# LIBS	        :=  -L ../metis  -lmetis -L /Applications/Absoft/lib -lU77
-  LIBS	        :=  -L ../metis  -lmetis 
+# LIBS	        :=  -L ./metis  -lmetis -L /Applications/Absoft/lib -lU77
+  LIBS	        :=  -L ./metis  -lmetis 
   MSGLIBS	:=  -lm
 endif
 
@@ -106,7 +106,7 @@ ifeq ($(compiler),absoft)   # absoft
   CC            :=  gcc
   CFLAGS        :=  -I. -O2 -DIBM
   LDFLAGS       :=
-  LIBS          :=  -L ../metis  -lmetis -lU77
+  LIBS          :=  -L ./metis  -lmetis -lU77
   PERFLIBS      :=
 # PERFLIBS      :=  -L$(HOME)/bin -lparaperf  -lezstub 
   MSGLIBS       :=  -lm
@@ -129,7 +129,7 @@ ifeq ($(compiler),gfortran)   # gfortran
   CC            :=  mpicc
   CFLAGS        :=  -I. -O2 -DIBM
   LDFLAGS       :=
-  LIBS          :=  -L ../metis  -lmetis -lU77
+  LIBS          :=  -L ./metis  -lmetis -lU77
   PERFLIBS      :=
 # PERFLIBS      :=  -L$(HOME)/bin -lparaperf  -lezstub 
   MSGLIBS       :=  -lm
@@ -161,7 +161,7 @@ ifeq ($(compiler),gfortran)   # gfortran
   CC            :=  gcc
   CFLAGS        :=  -I. -O2 -DLINUX
   CLIBS         := 
-  LIBS  	:=  -L ../metis  -lmetis
+  LIBS  	:=  -L ./metis  -lmetis
   MSGLIBS	:=  
 endif
 ifeq ($(compiler),pgi)   # pgi
@@ -184,7 +184,7 @@ ifeq ($(compiler),pgi)   # pgi
   CC            :=  pgcc
   CFLAGS        :=  -I. -O2 -DLINUX
   CLIBS         := 
-  LIBS  	:=  -L ../metis  -lmetis
+  LIBS  	:=  -L ./metis  -lmetis
   MSGLIBS	:=  
 endif
 endif
@@ -207,7 +207,7 @@ ifneq (,$(findstring mips-irix,$(MACHINE)-$(OS)))
   IMODS   	  :=  -I
   CC              :=  cc   
   CFLAGS          :=  -I. -O2
-  LIBS		  :=  -L ../metis  -lmetis
+  LIBS		  :=  -L ./metis  -lmetis
   MSGLIBS	  := -lmpi
 endif
 
@@ -231,9 +231,9 @@ ifneq (,$(findstring powerpc-aix,$(MACHINE)-$(OS)))
   IMODS         := -I
   CFLAGS        := -I. -O2 -DIBM
   ARFLAGS       := -X64
-  LIBS          := -L ../metis  -lmetis
+  LIBS          := -L ./metis  -lmetis
   PERFLIBS      :=
-# PERFLIBS      :=  -L ../metis -lmetis -L$(HOME)/bin -lparaperf -L$(LOCAL_LIBRARY) -lpapi64 -lpmapi
+# PERFLIBS      :=  -L ./metis -lmetis -L$(HOME)/bin -lparaperf -L$(LOCAL_LIBRARY) -lpapi64 -lpmapi
   MSGLIBS       := -lm
 endif
 
@@ -257,7 +257,7 @@ ifneq (,$(findstring sparc-solaris,$(MACHINE)-$(OS)))
   IMODS		:= -M
   CC       	:= tmcc 
   CFLAGS   	:= -I. 
-  LIBS     	:= -L../metis  -lmetis
+  LIBS     	:= -L./metis  -lmetis
   MSGLIBS  	:= -lmpi
 endif
 ########################################################################
@@ -279,7 +279,7 @@ ifneq (,$(findstring alphaev6-linux,$(MACHINE)-$(OS)))
   CC            := ccc
   CFLAGS        := -I. -DLINUX -O2
   CLIBS         := 
-  LIBS  	:=  -L ../metis  -lmetis
+  LIBS  	:=  -L ./metis  -lmetis
   MSGLIBS	:=  
 endif
 
@@ -311,7 +311,7 @@ ifeq ($(compiler),cray_xt3)
   DPRE2         :=  -DREAL4 -DLINUX -DCMPI
   CFLAGS        :=  -I. -DLINUX
   IMODS         :=  -module 
-  LIBS          :=  -L ../metis -lmetis
+  LIBS          :=  -L ./metis -lmetis
   PERFLIBS      :=
 # PERFLIBS      :=  -L$(HOME)/bin -lparaperf -L/opt/xt-tools/papi/3.2.1/lib/cnos64 -lpapi -lperfctr
   MSGLIBS       :=
@@ -333,7 +333,7 @@ ifeq ($(compiler),intel-lonestar)
   DPRE2         :=  -DREAL8 -DLINUX -DCMPI
   CFLAGS        :=  -O3 -xT -I.
   IMODS         :=  -I
-  LIBS          :=  -L ../metis -lmetis
+  LIBS          :=  -L ./metis -lmetis
   MSGLIBS       :=
 endif
 endif
