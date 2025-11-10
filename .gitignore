@@ -2,3 +2,7 @@ dagswem.code-workspace
 metis/
 **/*.o
 **/*.mod
+adcirc 
+adcpost
+adcprep
+padcirc
