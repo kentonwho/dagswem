@@ -83,7 +83,7 @@ project('dagswem','fortran', meson_version: '>=1.0.0',
   # ADCPREP Preprocessor 
   subdir('prep')
   inc = include_directories('prep/inc')
-  executable('adcprep', sources: prep_src, dependencies: metis_dep, include_directories: inc)
+  executable('adcprep', sources: prep_src, dependencies: [metis_dep, mpi_dep], include_directories: inc)
 
   # Serial DGSWEM Main Program
   inc = include_directories('src/inc')
