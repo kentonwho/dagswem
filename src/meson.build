@@ -52,7 +52,6 @@ dgswem_src = files([
 'orthobasis_area.F',
 'orthobasis_edge.F',
 'owiwind.F',
-'pdg_debug.F',
 'prep_DG.F',
 'prep_sed.F',
 'prep_slopelim.F',
