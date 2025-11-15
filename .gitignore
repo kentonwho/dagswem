@@ -1,5 +1,4 @@
 dagswem.code-workspace
-metis/
 **/*.o
 **/*.mod
 adcirc 
