@@ -2,7 +2,6 @@ prep_src = files([
 'adcprep.F',
 'cfl_prep.F',
 'decomp.F',
-'decomp.F90',
 'hs_2_ascii.F',
 'interp.F',
 'machdep.F',

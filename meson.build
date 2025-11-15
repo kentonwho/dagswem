@@ -86,10 +86,10 @@ project('dagswem','fortran', meson_version: '>=1.0.0',
   executable('adcprep', sources: prep_src, dependencies: metis_dep, include_directories: inc)
 
   # Serial DGSWEM Main Program
-  subdir('src')
-  executable('dgswem_serial', sources: dgswem_src)
-  # Parallel DGSWEM Main Program
   inc = include_directories('src/inc')
+  subdir('src')
+  executable('dgswem_serial', sources: dgswem_src, include_directories: inc)
+  # Parallel DGSWEM Main Program
   executable('dgswem', sources: dgswem_src + mpi_handlers, 
                        dependencies: mpi_dep, 
                        fortran_args: '-DCMPI',
