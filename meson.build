@@ -1,5 +1,4 @@
-project('dagswem','fortran', meson_version: '>=1.0.0', 
-  default_options: ['fortran_std=legacy'])
+project('dagswem','fortran', meson_version: '>=1.0.0')
 
 # DEVELOPER NOTES 
   # Many common flags are implictly handled by Meson. Please review them here, before you
@@ -76,14 +75,16 @@ project('dagswem','fortran', meson_version: '>=1.0.0',
     
 
 # BUILD LOGIC 
+  mpi_dep = dependency('mpi', required: true, fallback: ['mpi', 'mpi_dep'], language: 'fortran')
   metis_dep = dependency('metis', version: '>=4.0.1', required: true, fallback: ['metis', 'metis_dep'])
   
-  mpi_dep = dependency('mpi', required: true, fallback: ['mpi', 'mpi_dep'])
-
-  # ADCPREP Preprocessor 
+  #ADCPREP Preprocessor 
   subdir('prep')
   inc = include_directories('prep/inc')
-  executable('adcprep', sources: prep_src, dependencies: [metis_dep, mpi_dep], include_directories: inc)
+
+  executable('adcprep', sources: prep_src, dependencies: [metis_dep, mpi_dep], include_directories: inc, 
+            link_language: 'fortran',
+            ) #have to specify link_language to avoid meson trying to link with C compiler
 
   # Serial DGSWEM Main Program
   inc = include_directories('src/inc')
@@ -93,7 +94,8 @@ project('dagswem','fortran', meson_version: '>=1.0.0',
   executable('dgswem', sources: dgswem_src + mpi_handlers, 
                        dependencies: mpi_dep, 
                        fortran_args: '-DCMPI',
-                       include_directories: inc)
+                       include_directories: inc,
+                       )
 
   # ADCPOST Postprocessor
   subdir('post')
