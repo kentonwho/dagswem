@@ -36,7 +36,9 @@ project('dagswem','fortran', meson_version: '>=1.0.0')
 
   # Custom optimization options
   if get_option('overfit')
-    get_option('optimization') < 3 ? error('Enable O3 optimization level before trying overfitting.') :
+    if get_option('optimization') != '3'
+      error('Enable O3 optimization level before trying overfitting.')
+    endif  
     # Intel 
     intel_overfit_flags = ['-xHost', '-ipo']
     foreach flag : intel_overfit_flags
@@ -54,7 +56,7 @@ project('dagswem','fortran', meson_version: '>=1.0.0')
   endif
 
   if get_option('reckless')
-    if get_option('optimization') < 3
+    if get_option('optimization') != '3'
       error('Enable O3 optimization level before trying reckless execution.')
     endif
     # Intel 
