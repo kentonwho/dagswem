@@ -80,6 +80,7 @@ C.......Retrieve the elements which share the edge
 	!WRITE(669,*) L,EL_IN,TsGroup(EL_IN),EL_EX,TsGroup(EL_EX)
         !IF (TsGroup(EL_EX)<TsGroup(EL_IN)) WRITE(*,*) L,EL_IN,TsGroup(EL_IN),EL_EX,TsGroup(EL_EX) 
 
+!K: Handle the interfaces between different heats
 C.......Find which element is smaller, exit if smaller level is not = lvl
 c.......Only want to sweep across this edge once ..
         IF (TsGroup(EL_IN) /= lvl .and. TsGroup(EL_EX) /= lvl) THEN

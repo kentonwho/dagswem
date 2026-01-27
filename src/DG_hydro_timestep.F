@@ -114,7 +114,7 @@ c     $          rhs_qx(2,17511,irk),rhs_qx(3,17511,irk)
 c           endif
 c        endif
         call etime(tarray1)
-        CALL INTERNAL_EDGE_HYDRO(lvl)
+        CALL INTERNAL_EDGE_HYDRO(lvl) !loop over all edges
         call etime(tarray2)
         TIMINGS(1)=TIMINGS(1)+tarray2(1)+tarray2(2)-(tarray1(1)+tarray1(2))
 
@@ -199,7 +199,7 @@ C.......Apply the slopelimiter if appropriate
 
 C.......Apply the wet-dry algorithm if appropriate
 
-        IF (NOLIFA.GE.2) CALL WETDRY(lvl)
+        !IF (NOLIFA.GE.2) CALL WETDRY(lvl)
 
 
 C.......For parallel run update dofs if slope limiter and/or wetting andvdrying is being used
